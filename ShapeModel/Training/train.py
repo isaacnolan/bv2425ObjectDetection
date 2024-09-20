@@ -1,21 +1,29 @@
 from IPython.display import display, Image
 from ultralytics import YOLO
+import os
 
 #load the model
 model = YOLO("yolov8m.pt")#loads nano detection YOLO version 8 neural network
 
-n_epochs = 250
+n_epochs = 50
 bs = -1
-gpu_id = 0
+gpu_id = 0, 1
 imgSize = 640
-waitNum = 15
-workerNum = 8
+waitNum = 5
+workerNum = os.cpu_count()
 OptimizerChoice = 'auto'
 validate = True
 
 #Train
-results = model.train(data = r"/content/drive/MyDrive/data.yaml",
+results = model.train(data = "data.yaml",
                       imgsz = imgSize,
+                      pretrained = True,
+                      name = "CharModel1",
+                      cos_lr=True,
+                      #lr0=0.00269,
+                      #lrf=0.00288,
+                      lr0=0.00269,
+                      lrf=0.01288,
                       epochs = n_epochs,
                       batch = bs,
                       device = gpu_id,
