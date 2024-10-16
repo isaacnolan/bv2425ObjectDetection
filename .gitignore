@@ -1,0 +1,6 @@
+#ignore directories
+SyntheticData
+Filtering
+
+#ignore File extensions
+*.txt
