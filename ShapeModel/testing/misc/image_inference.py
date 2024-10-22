@@ -1,32 +1,35 @@
+# Adarsha's script
 import cv2
 import time
 from ultralytics import YOLO
 
 def main():
-    # Load the YOLOv11 model
-    model = YOLO('yolov11m.pt')
+    # Load the YOLO model
+    modelsDirectory = 'C:\\Users\\adars\\repos\\bv2425ObjectDetection\\ShapeModel\\testing\\misc\\'
+    modelName = 'yolov8n'
+    model = YOLO(modelsDirectory + modelName)
 
     # Load the image from file
-    image_path = '~/basketball_test.jpg'
+    image_path = 'C:\\Users\\adars\\repos\\bv2425ObjectDetection\\ShapeModel\\testing\\data\\basketball_court.jpg'
+
     frame = cv2.imread(image_path)
 
     if frame is None:
         print("Error: Could not load image.")
         return
 
-    start_time = time.time()
-    # Run inference on the single image
+    # Run inference and calc inference time
+    start_time = time.perf_counter()
     results = model(frame)
-
-    end_time = time.time()
-
+    end_time = time.perf_counter()
     inference_time = end_time - start_time
     print(f'Inference Time: {inference_time:.4f} seconds')
+
     # Plot results (draw bounding boxes and labels on the image)
     annotated_frame = results[0].plot()
 
     # Display the image with annotations
-    cv2.imshow('YOLOv11 Image Inference', annotated_frame)
+    cv2.imshow(modelName, annotated_frame)
 
     # Wait until a key is pressed to close the window
     cv2.waitKey(0)
