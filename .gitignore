@@ -4,3 +4,4 @@ Filtering
 
 #ignore File extensions
 *.txt
+*.pt
