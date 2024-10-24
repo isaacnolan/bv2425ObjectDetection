@@ -3,6 +3,7 @@ import sys
 import time
 import psutil
 from ultralytics import YOLO
+from functools import reduce
 import os
 
 #FUNCTIONS 
@@ -110,8 +111,9 @@ def main():
         "save_json": True
     }
 
-    dataset_path = "ShapeModel/test_pipeline/data"
-    dataset_yaml = dataset_path + "/hi.yaml"
+    dataset_name = "temp.yaml" #change to dataset name
+    dataset_path = "ShapeModel/test_pipeline/data" 
+    dataset_yaml = dataset_path + "/" + dataset_name
 
     #User Inputs: 
     #ask if they want default configuration or not for validation?
@@ -155,12 +157,15 @@ def main():
     #TODO: display avgs and all data cleanly
     #Note: display average instead of individual
     # Print out the time data
-    for result in      results_time:
-        print(f"Model: {result['model']}, Total inference elapsed Time: {result['inference_time']:.4f} seconds")
+            
+    for names_time in results_time:
+        avg_time = (reduce(lambda a, b: a+b, results_time[names_time]))/2
+        print(f"Model: {results_time[names_time]}, Total inference elapsed Time: {avg_time:.4f} seconds")
 
-    # Print out the memory usage
-    for usage in results_memory:
-        print(f"Model: {usage['model']}, Total change in memory usage: {usage['memory_usage']:.4f} MB")
+    for names_mem in results_memory:
+        avg_mem = (reduce(lambda a, b: a+b, results_time[names_mem]))/2
+        print(f"Model: {results_memory[names_mem]}, Total inference elapsed Time: {avg_mem:.4f} seconds")
+
 
 if __name__ == "__main__":
     main()
