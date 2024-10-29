@@ -1,4 +1,3 @@
-from IPython.display import display, Image
 from ultralytics import YOLO
 import os
 
