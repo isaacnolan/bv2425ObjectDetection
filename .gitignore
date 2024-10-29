@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #ignore directories
 SyntheticData
 Filtering
@@ -5,3 +6,10 @@ Filtering
 #ignore File extensions
 *.txt
 *.pt
+=======
+
+.DS_Store
+venv/
+
+*.pt
+>>>>>>> af79cc51c1b9cf22a271cd8f89ef632a6bba2dd3

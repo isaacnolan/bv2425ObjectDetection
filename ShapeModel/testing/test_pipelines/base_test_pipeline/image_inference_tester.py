@@ -14,7 +14,7 @@ def process_frame(model, frame, results_memory, results_time, model_name):
         after_memory = get_ram_usage()
 
         results_memory[model_name].append(after_memory - initial_memory)
-        results_time[model_name].append(after_memory - initial_memory)
+        results_time[model_name].append(end_time - start_time)
 
 # Gets ram usage
 def get_ram_usage():
@@ -67,7 +67,7 @@ def main():
         process_frame(model, frame, results_memory, results_time, model_name) 
        
 
-    #Note: display average instead of individual
+    # TODO: display average instead of individual
     # Print out the time data
     for result in      results_time:
         print(f"Model: {result['model']}, Total inference elapsed Time: {result['inference_time']:.4f} seconds")
