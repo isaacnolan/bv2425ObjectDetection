@@ -1,7 +1,7 @@
 from PIL import Image
 import os
 
-def split_image_with_overlap(image_path, output_folder, grid_size=(3, 3), overlap=(50, 50)):
+def split_image_with_overlap(image_path, output_folder, grid_size=(3, 3), overlap=(500, 500)):
     # Open the image
     image = Image.open(image_path)
     img_width, img_height = image.size
