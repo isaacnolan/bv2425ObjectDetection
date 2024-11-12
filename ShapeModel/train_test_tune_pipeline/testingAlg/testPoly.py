@@ -5,8 +5,11 @@ import psutil
 from ultralytics import YOLO
 from functools import reduce
 import os
+<<<<<<< HEAD
 import matplotlib.pyplot as plt
 import numpy as np
+=======
+>>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 #FUNCTIONS 
 # Validate the model
@@ -35,7 +38,11 @@ def process_frame(model, frame, results_memory, results_time, model_name):
         after_memory = get_ram_usage()
 
         results_memory[model_name].append(after_memory - initial_memory)
+<<<<<<< HEAD
         results_time[model_name].append(end_time - start_time)
+=======
+        results_time[model_name].append(after_memory - initial_memory)
+>>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 # Gets ram usage
 def get_ram_usage():
@@ -157,6 +164,7 @@ def main():
        
 
     #TODO: display avgs and all data cleanly
+<<<<<<< HEAD
     #models -------
     #side: mem, runtime, 4 metrics
     #Note: display average instead of individual
@@ -187,6 +195,18 @@ def main():
     table.set_fontsize(10)
 
     plt.show()
+=======
+    #Note: display average instead of individual
+    # Print out the time data
+            
+    for names_time in results_time:
+        avg_time = (reduce(lambda a, b: a+b, results_time[names_time]))/2
+        print(f"Model: {results_time[names_time]}, Total inference elapsed Time: {avg_time:.4f} seconds")
+
+    for names_mem in results_memory:
+        avg_mem = (reduce(lambda a, b: a+b, results_time[names_mem]))/2
+        print(f"Model: {results_memory[names_mem]}, Total inference elapsed Time: {avg_mem:.4f} seconds")
+>>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 
 if __name__ == "__main__":
