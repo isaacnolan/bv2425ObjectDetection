@@ -5,6 +5,11 @@ import psutil
 from ultralytics import YOLO
 from functools import reduce
 import os
+<<<<<<< HEAD
+import matplotlib.pyplot as plt
+import numpy as np
+=======
+>>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 #FUNCTIONS 
 # Validate the model
@@ -33,7 +38,11 @@ def process_frame(model, frame, results_memory, results_time, model_name):
         after_memory = get_ram_usage()
 
         results_memory[model_name].append(after_memory - initial_memory)
+<<<<<<< HEAD
+        results_time[model_name].append(end_time - start_time)
+=======
         results_time[model_name].append(after_memory - initial_memory)
+>>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 # Gets ram usage
 def get_ram_usage():
@@ -155,6 +164,38 @@ def main():
        
 
     #TODO: display avgs and all data cleanly
+<<<<<<< HEAD
+    #models -------
+    #side: mem, runtime, 4 metrics
+    #Note: display average instead of individual
+    # Print out the time data
+    
+    # Initialize table headers
+    combined_results = [['Model Name', 'Avg Time (s)', 'Avg Memory (MB)']]
+
+    # Compute avgs
+    for model_name in results_time:
+        # avg time calc
+        avg_time = sum(results_time[model_name]) / len(results_time[model_name]) 
+        # avg mem calc
+        avg_memory = sum(results_memory[model_name]) / len(results_memory[model_name]) 
+
+        # Add model names and data
+        combined_results.append([model_name, f"{avg_time:.4f}", f"{avg_memory:.4f}"])
+        print(f"Model: {model_name}, Avg Time: {avg_time:.4f} seconds, Avg Memory: {avg_memory:.4f} MB")
+
+    # Create figure
+    fig, ax = plt.subplots()
+    ax.axis('tight')
+    ax.axis('off')
+
+    # Create and display the table
+    table = ax.table(cellText=combined_results, loc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+
+    plt.show()
+=======
     #Note: display average instead of individual
     # Print out the time data
             
@@ -165,6 +206,7 @@ def main():
     for names_mem in results_memory:
         avg_mem = (reduce(lambda a, b: a+b, results_time[names_mem]))/2
         print(f"Model: {results_memory[names_mem]}, Total inference elapsed Time: {avg_mem:.4f} seconds")
+>>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 
 if __name__ == "__main__":

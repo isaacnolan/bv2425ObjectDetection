@@ -1,0 +1,3 @@
+[submodule "ImageStitching/C++/vlfeat"]
+	path = ImageStitching/C++/vlfeat
+	url = https://github.com/vlfeat/vlfeat.git
