@@ -5,11 +5,8 @@ import psutil
 from ultralytics import YOLO
 from functools import reduce
 import os
-<<<<<<< HEAD
 import matplotlib.pyplot as plt
 import numpy as np
-=======
->>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 #FUNCTIONS 
 # Validate the model
@@ -30,19 +27,17 @@ def validation(model, dataset, configuration):
 #process fram for performance
 def process_frame(model, frame, results_memory, results_time, model_name):
         initial_memory = get_ram_usage()
-        start_time = time.perf_counter()
-
+        start_time = time.perf_counter()\
+        
+        #print("start")
         results = model(frame)
-
+        #print("end")
         end_time = time.perf_counter()
         after_memory = get_ram_usage()
 
+        print(after_memory - initial_memory)
         results_memory[model_name].append(after_memory - initial_memory)
-<<<<<<< HEAD
         results_time[model_name].append(end_time - start_time)
-=======
-        results_time[model_name].append(after_memory - initial_memory)
->>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 # Gets ram usage
 def get_ram_usage():
@@ -76,11 +71,14 @@ def process_image(images_path, model, results_memory, results_time, model_name):
     directory = images_path
 
     for filename in os.listdir(directory):
+        #print(filename)
         f = os.path.join(directory, filename)
         # checking if it is a file
         if os.path.isfile(f):
+            #print("start")
             frame = cv2.imread(f)
             if frame is None:
+                
                 print("Error: Could not load image.")
                 return
             else:
@@ -91,7 +89,7 @@ def process_image(images_path, model, results_memory, results_time, model_name):
 
 def main():
     # Initialize models
-    models_directory = 'ShapeModel/test_pipeline/models/'
+    models_directory = 'ShapeModel/train_test_tune_pipeline/models/'
     modelNames = ['yolo11n', 'yolo11s', 'yolo11m', 'yolo11l', 'yolo11x']
 
     results_memory = {
@@ -120,11 +118,11 @@ def main():
         "save_json": True
     }
 
-    dataset_name = "temp.yaml" #change to dataset name
-    dataset_path = "ShapeModel/test_pipeline/data" 
+    dataset_name = "images" #change to dataset name
+    dataset_path = "ShapeModel/train_test_tune_pipeline/data/" +dataset_name
     dataset_yaml = dataset_path + "/" + dataset_name
 
-    #User Inputs: 
+    #User Inputs:  
     #ask if they want default configuration or not for validation?
     config = input("Do you want default configuration? (Y/n): \n")
     if config == 'N'or config == 'n':
@@ -141,13 +139,13 @@ def main():
     elif data_type == 'I' or data_type == 'i':
         print("Image Data Selected/n")
     else:
-        print("Invalid Data Type/n")
+        print("Invalid Data Type\n")
         sys.exit(1)
 
     # Loop through each model
     for model_name in modelNames:
         print(f"Testing model: {model_name}")
-        model_path = models_directory + model_name
+        model_path = models_directory + model_name + ".pt"
         # Load model
         model = YOLO(model_path)
         
@@ -159,12 +157,11 @@ def main():
         else:
             process_image(dataset_path, model, results_memory, results_time, model_name)
             #run accuracy check 
-            validation(model, dataset_yaml, val_configuration)
+            #validation(model, dataset_yaml, val_configuration)
  
        
 
     #TODO: display avgs and all data cleanly
-<<<<<<< HEAD
     #models -------
     #side: mem, runtime, 4 metrics
     #Note: display average instead of individual
@@ -176,6 +173,9 @@ def main():
     # Compute avgs
     for model_name in results_time:
         # avg time calc
+        print(sum(results_time[model_name]))
+        print(sum(results_memory[model_name]))
+
         avg_time = sum(results_time[model_name]) / len(results_time[model_name]) 
         # avg mem calc
         avg_memory = sum(results_memory[model_name]) / len(results_memory[model_name]) 
@@ -195,18 +195,6 @@ def main():
     table.set_fontsize(10)
 
     plt.show()
-=======
-    #Note: display average instead of individual
-    # Print out the time data
-            
-    for names_time in results_time:
-        avg_time = (reduce(lambda a, b: a+b, results_time[names_time]))/2
-        print(f"Model: {results_time[names_time]}, Total inference elapsed Time: {avg_time:.4f} seconds")
-
-    for names_mem in results_memory:
-        avg_mem = (reduce(lambda a, b: a+b, results_time[names_mem]))/2
-        print(f"Model: {results_memory[names_mem]}, Total inference elapsed Time: {avg_mem:.4f} seconds")
->>>>>>> 61ae7ddd02966f635a9c55330a9ddaf6bc71bf8e
 
 
 if __name__ == "__main__":
