@@ -5,7 +5,7 @@
 #include <string>
 #include <filesystem>
 
-const std::string images_path = "../images/mountain";
+const std::string images_path = "../images/googleMaps";
 const std::string output_path = "../output/stitchedNew.jpg";
 bool crop = true;
 bool preprocessing = false;
