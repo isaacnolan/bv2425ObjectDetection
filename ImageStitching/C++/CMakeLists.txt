@@ -1,5 +1,6 @@
 # Minimum required version of CMake
 cmake_minimum_required(VERSION 3.10)
+set(CMAKE_TOOLCHAIN_FILE "/opt/homebrew/opt/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
 # Project name
 project(imageStitching)
@@ -8,7 +9,7 @@ project(imageStitching)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 #change to your path
-set(CMAKE_TOOLCHAIN_FILE "/opt/homebrew/opt/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+
 
 
 # Find OpenCV package

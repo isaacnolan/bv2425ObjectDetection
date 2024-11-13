@@ -5,5 +5,10 @@ venv/
 build/
 vcpkg_installed/
 .vscode/
+<<<<<<< Updated upstream
 *.png
 CMakePresets.json
+=======
+$ImageStitching/
+CMakePresets.json
+>>>>>>> Stashed changes
