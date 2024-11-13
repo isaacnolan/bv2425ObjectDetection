@@ -1,7 +1,5 @@
-
 .DS_Store
 venv/
+
+*.png
 *.pt
-.vscode/
-build/
-vcpkg_installed/

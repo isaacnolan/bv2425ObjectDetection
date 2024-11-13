@@ -5,6 +5,8 @@ import psutil
 from ultralytics import YOLO
 from functools import reduce
 import os
+import matplotlib.pyplot as plt
+import numpy as np
 
 #FUNCTIONS 
 # Validate the model
@@ -33,7 +35,7 @@ def process_frame(model, frame, results_memory, results_time, model_name):
         after_memory = get_ram_usage()
 
         results_memory[model_name].append(after_memory - initial_memory)
-        results_time[model_name].append(after_memory - initial_memory)
+        results_time[model_name].append(start_time - end_time)
 
 # Gets ram usage
 def get_ram_usage():
@@ -82,7 +84,7 @@ def process_image(images_path, model, results_memory, results_time, model_name):
 
 def main():
     # Initialize models
-    models_directory = 'ShapeModel/test_pipeline/models/'
+    models_directory = 'ShapeModel/train_test_tune_pipeline/models/'
     modelNames = ['yolo11n', 'yolo11s', 'yolo11m', 'yolo11l', 'yolo11x']
 
     results_memory = {
@@ -111,8 +113,8 @@ def main():
         "save_json": True
     }
 
-    dataset_name = "temp.yaml" #change to dataset name
-    dataset_path = "ShapeModel/test_pipeline/data" 
+    dataset_name = "images" #change to dataset name
+    dataset_path = "ShapeModel/train_test_tune_pipeline/data" 
     dataset_yaml = dataset_path + "/" + dataset_name
 
     #User Inputs: 
@@ -138,7 +140,7 @@ def main():
     # Loop through each model
     for model_name in modelNames:
         print(f"Testing model: {model_name}")
-        model_path = models_directory + model_name
+        model_path = models_directory + model_name + ".pt"
         # Load model
         model = YOLO(model_path)
         
@@ -150,21 +152,41 @@ def main():
         else:
             process_image(dataset_path, model, results_memory, results_time, model_name)
             #run accuracy check 
-            validation(model, dataset_yaml, val_configuration)
+            #validation(model, dataset_yaml, val_configuration)
  
        
 
     #TODO: display avgs and all data cleanly
+    #models -------
+    #side: mem, runtime, 4 metrics
     #Note: display average instead of individual
     # Print out the time data
-            
-    for names_time in results_time:
-        avg_time = (reduce(lambda a, b: a+b, results_time[names_time]))/2
-        print(f"Model: {results_time[names_time]}, Total inference elapsed Time: {avg_time:.4f} seconds")
+    
+    # Initialize table headers
+    combined_results = [['Model Name', 'Avg Time (s)', 'Avg Memory (MB)']]
 
-    for names_mem in results_memory:
-        avg_mem = (reduce(lambda a, b: a+b, results_time[names_mem]))/2
-        print(f"Model: {results_memory[names_mem]}, Total inference elapsed Time: {avg_mem:.4f} seconds")
+    # Compute avgs
+    for model_name in results_time:
+        # avg time calc
+        avg_time = sum(results_time[model_name]) / len(results_time[model_name]) 
+        # avg mem calc
+        avg_memory = sum(results_memory[model_name]) / len(results_memory[model_name]) 
+
+        # Add model names and data
+        combined_results.append([model_name, f"{avg_time:.4f}", f"{avg_memory:.4f}"])
+        print(f"Model: {model_name}, Avg Time: {avg_time:.4f} seconds, Avg Memory: {avg_memory:.4f} MB")
+
+    # Create figure
+    fig, ax = plt.subplots()
+    ax.axis('tight')
+    ax.axis('off')
+
+    # Create and display the table
+    table = ax.table(cellText=combined_results, loc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+
+    plt.show()
 
 
 if __name__ == "__main__":
