@@ -7,7 +7,7 @@ from imutils import paths
 #possible changes: change the feature detection from whatever openCV uses to Sift or ORB etc.
 
 #directory that has images in correct order
-images_path = "ImageStitching/Python/images/googleMaps"
+images_path = "ImageStitching/Python/images/surya"
 output_path = "ImageStitching/Python/output/stitchedNew.jpg"
 
 #crop option to create perfect borders
