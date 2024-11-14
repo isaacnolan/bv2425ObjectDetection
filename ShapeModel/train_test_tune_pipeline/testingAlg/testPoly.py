@@ -3,10 +3,8 @@ import sys
 import time
 import psutil
 from ultralytics import YOLO
-from functools import reduce
 import os
 import matplotlib.pyplot as plt
-import numpy as np
 
 #FUNCTIONS 
 # Validate the model
@@ -19,10 +17,29 @@ def validation(model, dataset, configuration):
                         device = configuration["device"],
                         plots = configuration["plots"],
                         save_json = configuration["save_json"]) 
-    metrics.box.map  # map50-95
-    metrics.box.map50  # map50
-    metrics.box.map75  # map75
-    metrics.box.maps  # a list contains map50-95 of each category
+    # Print specific metrics
+    #print("Class indices with average precision:", metrics.ap_class_index)
+    print("Average precision for all classes:", metrics.box.all_ap)
+    #print("Average precision:", metrics.box.ap)
+    print("Average precision at IoU=0.50:", metrics.box.ap50)
+    #print("Class indices for average precision:", metrics.box.ap_class_index)
+    print("Class-specific results:", metrics.box.class_result)
+    print("F1 score:", metrics.box.f1)
+    print("F1 score curve:", metrics.box.f1_curve)
+    #print("Overall fitness score:", metrics.box.fitness)
+    #print("Mean average precision:", metrics.box.map)
+    print("Mean average precision at IoU=0.50:", metrics.box.map50)
+    print("Mean average precision at IoU=0.75:", metrics.box.map75)
+   #print("Mean average precision for different IoU thresholds:", metrics.box.maps)
+    #print("Mean results for different metrics:", metrics.box.mean_results)
+    print("Mean precision:", metrics.box.mp)
+    print("Mean recall:", metrics.box.mr)
+    print("Precision:", metrics.box.p)
+    print("Precision curve:", metrics.box.p_curve)
+    print("Precision values:", metrics.box.prec_values)
+    print("Specific precision metrics:", metrics.box.px)
+    print("Recall:", metrics.box.r)
+    print("Recall curve:", metrics.box.r_curve)
 
 #process fram for performance
 def process_frame(model, frame, results_memory, results_time, model_name):
@@ -163,7 +180,7 @@ def main():
 
     #TODO: display avgs and all data cleanly
     #models -------
-    #side: mem, runtime, 4 metrics
+    #side: mem, runtime, 22 metrics
     #Note: display average instead of individual
     # Print out the time data
     
