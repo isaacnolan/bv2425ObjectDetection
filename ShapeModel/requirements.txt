@@ -1,5 +1,6 @@
 wandb==0.18.7
-ultralytics==8.3.31 #ray[tune]
+ultralytics==8.3.31
+"ray[tune]"
 matplotlib==3.8.3
 opencv-python==4.9.0.80
 psutil==5.9.8
