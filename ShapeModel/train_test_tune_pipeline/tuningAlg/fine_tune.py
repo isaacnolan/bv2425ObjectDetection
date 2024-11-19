@@ -1,12 +1,11 @@
 #this will be an algorithm that fine tunes a YOLO model on synth data
- 
 # https://docs.ultralytics.com/integrations/ray-tune/#custom-search-space-example 
 # https://docs.ultralytics.com/guides/hyperparameter-tuning/ 
-
 
 import wandb
 import matplotlib.pyplot as plt
 from ultralytics import YOLO
+from ray import tune
 
 wandb.init(project="YOLO-Tuning", entity="your-entity")
 
