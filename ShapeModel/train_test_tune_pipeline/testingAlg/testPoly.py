@@ -44,7 +44,7 @@ def validation(model, dataset, configuration):
 #process fram for performance
 def process_frame(model, frame, results_memory, results_time, model_name):
         initial_memory = get_ram_usage()
-        start_time = time.perf_counter()\
+        start_time = time.perf_counter()
         
         #print("start")
         results = model(frame)
@@ -176,12 +176,6 @@ def main():
             #run accuracy check 
             #validation(model, dataset_yaml, val_configuration)
  
-       
-
-    #TODO: display avgs and all data cleanly
-    #models -------
-    #side: mem, runtime, 22 metrics
-    #Note: display average instead of individual
     # Print out the time data
     
     # Initialize table headers
@@ -199,7 +193,7 @@ def main():
 
         # Add model names and data
         combined_results.append([model_name, f"{avg_time:.4f}", f"{avg_memory:.4f}"])
-        print(f"Model: {model_name}, Avg Time: {avg_time:.4f} seconds, Avg Memory: {avg_memory:.4f} MB")
+        print(f"Model: {model_name}, Avg Time: {avg_time:.4f} seconds, Avg Memory: {avg_memory:.4f} GB")
 
     # Create figure
     fig, ax = plt.subplots()
