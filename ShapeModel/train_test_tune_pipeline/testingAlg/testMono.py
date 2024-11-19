@@ -91,9 +91,9 @@ def main():
     model_name_input = input("Enter the model name (with .pt extension): ").strip()
 
     # Define the relative path for the model and dataset files
-    model_path = f'bv2425ObjectDetection/ShapeModel/train_test_tune_pipeline/models/{model_name_input}'
+    model_path = f'ShapeModel/train_test_tune_pipeline/models/{model_name_input}'
     dataset_yaml = 'bv2425ObjectDetection/ShapeModel/train_test_tune_pipeline/data/coco.yaml'
-
+    dataset_path = 'ShapeModel/train_test_tune_pipeline/data/'
     # Check if the model file exists before loading it
     if not os.path.exists(model_path):
         print(f"Error: Model file '{model_path}' does not exist.")
@@ -139,7 +139,8 @@ def main():
         process_video(video_path, model, results_memory, results_time, model_name_input)
     elif data_type in ['I', 'i']:
         print("Image Data Selected\n")
-        process_image('bv2425ObjectDetection/ShapeModel/train_test_tune_pipeline/data/', model, results_memory, results_time, model_name_input)
+        dataDir = input("Enter Dataset Directory: ")
+        process_image(dataset_path+dataDir, model, results_memory, results_time, model_name_input)
         # Run accuracy check 
         #validation(model, dataset_yaml, val_configuration)
     else:
@@ -149,13 +150,13 @@ def main():
     # Print out the time data
     if results_time[model_name_input]:
         avg_time = (reduce(lambda a, b: a + b, results_time[model_name_input])) / len(results_time[model_name_input])
-        print(f"Model: {model_name_input}, Total inference elapsed Time: {avg_time:.4f} seconds")
+        print(f"Model: {model_name_input}, Average inference elapsed Time: {avg_time:.4f} seconds")
     else:
         print(f"No time data collected for model: {model_name_input}")
 
     if results_memory[model_name_input]:
         avg_mem = (reduce(lambda a, b: a + b, results_memory[model_name_input])) / len(results_memory[model_name_input])
-        print(f"Model: {model_name_input}, Total memory usage: {avg_mem:.4f} MB")
+        print(f"Model: {model_name_input}, Average memory usage: {avg_mem:.4f} MB")
     else:
         print(f"No memory data collected for model: {model_name_input}")
 
