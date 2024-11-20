@@ -92,7 +92,6 @@ def main():
 
     # Define the relative path for the model and dataset files
     model_path = f'ShapeModel/train_test_tune_pipeline/models/{model_name_input}'
-    dataset_yaml = 'bv2425ObjectDetection/ShapeModel/train_test_tune_pipeline/data/coco.yaml'
     dataset_path = 'ShapeModel/train_test_tune_pipeline/data/'
     # Check if the model file exists before loading it
     if not os.path.exists(model_path):
@@ -119,7 +118,7 @@ def main():
     }
 
     print("Model path:", model_path)
-    print("Dataset YAML path:", dataset_yaml)
+    #print("Dataset YAML path:", dataset_yaml)
 
     # User Inputs: 
     # Ask if they want default configuration or not for validation?
@@ -142,7 +141,7 @@ def main():
         dataDir = input("Enter Dataset Directory: ")
         process_image(dataset_path+dataDir, model, results_memory, results_time, model_name_input)
         # Run accuracy check 
-        #validation(model, dataset_yaml, val_configuration)
+        #validation(model, dataset_path+dataDir+"/data.yaml", val_configuration)
     else:
         print("Invalid Data Type\n")
         sys.exit(1)
