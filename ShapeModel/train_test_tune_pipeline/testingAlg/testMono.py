@@ -4,6 +4,7 @@ import cv2
 import time
 import psutil
 from ultralytics import YOLO
+import matplotlib.pyplot as plt
 from functools import reduce
 
 # FUNCTIONS 
@@ -26,6 +27,7 @@ def validation(model, dataset, configuration):
 def process_frame(model, frame, results_memory, results_time, model_name):
     initial_memory = get_ram_usage()
     start_time = time.perf_counter()
+    #(https://docs.ultralytics.com/modes/predict/#working-with-results)
 
     results = model(frame)
 
@@ -146,6 +148,9 @@ def main():
         print("Invalid Data Type\n")
         sys.exit(1)
 
+    # These results will be put into a table
+    combined_results = [['Model Name', 'Avg Time (s)', 'Avg Memory (MB)']]
+
     # Print out the time data
     if results_time[model_name_input]:
         avg_time = (reduce(lambda a, b: a + b, results_time[model_name_input])) / len(results_time[model_name_input])
@@ -158,6 +163,21 @@ def main():
         print(f"Model: {model_name_input}, Average memory usage: {avg_mem:.4f} MB")
     else:
         print(f"No memory data collected for model: {model_name_input}")
+
+    # Add model names and data
+    combined_results.append([model_name_input, f"{avg_time:.4f}", f"{avg_mem:.4f}"])
+
+    # Creating figure
+    fig, ax = plt.subplots()
+    ax.axis('tight')
+    ax.axis('off')
+
+    # Create and display the table
+    table = ax.table(cellText=combined_results, loc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+
+    plt.show()
 
 if __name__ == "__main__":
     main()
