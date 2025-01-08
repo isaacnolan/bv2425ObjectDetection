@@ -45,6 +45,7 @@ def validation(model, dataset, configuration):
 def process_frame(model, frame, results_memory, results_time, model_name):
         initial_memory = get_ram_usage()
         start_time = time.perf_counter()
+        #(https://docs.ultralytics.com/modes/predict/#working-with-results)
         
         #print("start")
         results = model(frame)
