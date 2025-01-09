@@ -3,7 +3,7 @@ from PIL import Image
 from io import BytesIO
 
 # Google Maps Static API key
-api_key = 'key'
+api_key = 'AIzaSyByVejL8C1Am45sCwsOcwWrk6vciSUgl3s'
 
 # Coordinates for the area
 southwest = "38.314816,-76.552653"  # bottom-left corner
