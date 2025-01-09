@@ -1,6 +1,11 @@
-.DS_Store
-venv/
-
+#files
 *.png
 *.pt
 *.mp4
+
+#dir
+Image Segmenting
+ImageStitching
+Filtering
+.DS_Store
+venv/
