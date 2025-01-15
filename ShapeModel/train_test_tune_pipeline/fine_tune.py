@@ -7,14 +7,17 @@ import matplotlib.pyplot as plt
 from ultralytics import YOLO
 from ray import tune
 
-wandb.init(project="YOLO-Tuning", entity="your-entity")
+storage_path = "tune"
+exp_name = "exp_1_17_24"
+train_mnist = 0 #change this****
+wandb.init(project="YOLO-Tuning", entity="BuckeyeVertical", name = exp_name)
 
 # Load YOLO model
-model = YOLO("yolo11n.pt")
+model = YOLO("yolo11m.pt")
 
 # Tune hyperparameters
 result_grid = model.tune(
-    data="coco8.yaml",
+    data="data_yaml.yaml",
     space={},
     epochs=50,
     use_ray=True)

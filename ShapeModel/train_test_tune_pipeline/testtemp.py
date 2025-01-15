@@ -1,12 +1,26 @@
-import cv2
+import cv2, os
 from ultralytics import YOLO
 
 # Load the YOLO model
-model = YOLO('ShapeModel/train_test_tune_pipeline/models/best.pt')
+model_dir = "ShapeModel/train_test_tune_pipeline/models"
+model_name = "yolo11m.pt"
+model = YOLO(os.path.join(model_dir,model_name))
 
 # Open the video file
-video_path = "ShapeModel/train_test_tune_pipeline/data/videos/DJI_0029.MP4"
+data_path = "ShapeModel/train_test_tune_pipeline/data/videos"
+video = "DJI_0029.MP4"
+video_path = os.path.join(data_path, video)
 cap = cv2.VideoCapture(video_path)
+
+# Get video properties
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fps = int(cap.get(cv2.CAP_PROP_FPS))
+output_path = os.path.join(data_path, video[:-4]+"_annotated.mp4") 
+
+# Define the codec and create a VideoWriter object
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
 
 # Loop through the video frames
 while cap.isOpened():
@@ -19,9 +33,13 @@ while cap.isOpened():
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
+        print(results[0].cpu())
 
-        # Display the annotated frame
-        cv2.imshow("YOLO Inference", annotated_frame) 
+        # Write the annotated frame to the output video
+        out.write(annotated_frame)
+
+        # Display the annotated frame (optional)
+        cv2.imshow("YOLO Inference", annotated_frame)
 
         # Break the loop if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -30,6 +48,9 @@ while cap.isOpened():
         # Break the loop if the end of the video is reached
         break
 
-# Release the video capture object and close the display window
+# Release the video capture and writer objects, and close the display window
 cap.release()
+out.release()
 cv2.destroyAllWindows()
+
+print(f"Annotated video saved to {output_path}")
