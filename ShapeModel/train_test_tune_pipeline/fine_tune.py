@@ -7,20 +7,37 @@ import matplotlib.pyplot as plt
 from ultralytics import YOLO
 from ray import tune
 
+'''
+#TENSORBOARD ADDITIVES
+from pandas_datareader import data
+import matplotlib.pyplot as plt
+import pandas as pd
+import datetime as dt
+import urllib.request, json
+import os
+import numpy as np
+import tensorflow as tf
+
+os.system("tensorboard --logdir=summaries")
+#https://www.datacamp.com/tutorial/tensorboard-tutorial
+'''
+
 storage_path = "tune"
 exp_name = "exp_1_17_24"
 train_mnist = 0 #change this****
-wandb.init(project="YOLO-Tuning", entity="BuckeyeVertical", name = exp_name)
+wandb.init(project="YOLO-Tuning", name = exp_name)
 
 # Load YOLO model
 model = YOLO("yolo11m.pt")
 
 # Tune hyperparameters
 result_grid = model.tune(
-    data="data_yaml.yaml",
-    space={},
+    data="data_yaml.yaml", #Make absolute path
+    space={"lr0": tune.uniform(1e-5, 1e-1)},
     epochs=50,
-    use_ray=True)
+    use_ray=True,
+    gpu_per_trial=1,
+    device=0)
 
 experiment_path = f"{storage_path}/{exp_name}"
 print(f"Loading results from {experiment_path}...")
