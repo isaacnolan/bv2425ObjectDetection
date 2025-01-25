@@ -9,4 +9,11 @@ ImageStitching
 Filtering
 .DS_Store
 venv/
-runs
+*.pt
+build/
+vcpkg_installed/
+.vscode/
+*.png
+CMakePresets.json
+$ImageStitching/
+
