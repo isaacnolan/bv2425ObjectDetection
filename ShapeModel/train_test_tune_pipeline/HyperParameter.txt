@@ -1,0 +1,5 @@
+Python executable: /apps/miniconda3/23.3.1-py310/bin/python
+Traceback (most recent call last):
+  File "/users/PAS2926/inolan/bv2425ObjectDetection/ShapeModel/train_test_tune_pipeline/fine_tune.py", line 5, in <module>
+    import wandb
+ModuleNotFoundError: No module named 'wandb'
