@@ -1,71 +1,48 @@
 import cv2
 import numpy as np
 
-def main():
-    # Example 2D point correspondences in two images.
-    # Here, we have 4 matched points across 2 images.
-    # Each 2D array is of shape (2, N).
-    #given from suryas code
-    points2d_img1 = np.array([
-        [100, 200, 300, 400],  # x-coordinates
-        [100, 120, 100, 120]   # y-coordinates
-    ], dtype=np.float32)
+#intrinsic matrix
+K = np.array([[2179.63, 0, 473.28],
+              [0, 1958.57, 527.62],
+              [0, 0, 1]], dtype=np.float32)
 
-    points2d_img2 = np.array([
-        [110, 210, 310, 410],   # x-coordinates
-        [95,  115, 90,  110]    # y-coordinates
-    ], dtype=np.float32)
+#extrinsic parameters (top-down orientation)
+#this also might be the identity matrix not sure yet
+R = np.array([[1, 0, 0],
+              [0, -1, 0],
+              [0, 0, -1]], dtype=np.float32)
+#altitude meters
+h = 30.0 
+#displacement meters
+baseline = 5.0
 
-    # Combine into a list of 2D arrays (one per image)
-    points2d = [points2d_img1, points2d_img2]
+#projection matrices one per image
+#K[R|t]
+#t1 = [0, 0, altitude]
+#t2 = [baseline, 0, altitude]
+P1 = K @ np.hstack((R, [[0], [0], [h]]))
+P2 = K @ np.hstack((R, [[baseline], [0], [h]]))
 
-    # Example projection matrices (3x4) for the two images.
-    # In a real scenario, these come from camera intrinsic and extrinsic parameters.
-    
-    K = np.array([
-        [1.0, 0.0, 0.0],
-        [0.0, 1.0, 0.0],
-        [0.0, 0.0, 1.0]
-    ], dtype=np.float32)
-    
-    #3×4 projection matrix
-    #(K[R∣t])
-    #R is all 1 
-    
-    #fill in once checkerbored image is given
-    #fourth column should be coordinates of the drone so the final output is also long and lat
-    P1 = np.array([
-        [1.0, 0.0, 0.0, 0.0],
-        [0.0, 1.0, 0.0, 0.0],
-        [0.0, 0.0, 1.0, 0.0]
-    ], dtype=np.float32)
+#load corresponding points example 4 points which are corresponding corners of object
+points1 = np.array([[200, 300], [400, 500], [150, 600], [700, 200]], dtype=np.float32).T
+points2 = np.array([[180, 310], [380, 510], [130, 610], [680, 210]], dtype=np.float32).T
 
-    # Suppose the second camera is translated 100 units along the X-axis.
-    P2 = np.array([
-        [1.0, 0.0, 0.0, 100.0],
-        [0.0, 1.0, 0.0, 0.0],
-        [0.0, 0.0, 1.0, 0.0]
-    ], dtype=np.float32)
+#triangulate
+points_4d = cv2.triangulatePoints(P1, P2, points1, points2)
+#points_4d = cv2.triangulatePoints(points_4d, P3, pts3)  # Add third view
+points_3d = (points_4d[:3, :] / points_4d[3, :]).T
 
-    # Combine into a list of projection matrices
-    projection_matrices = [P1, P2]
+#Triangulate using all pairwise combinations
+#points_3d_12 = cv2.triangulatePoints(P1, P2, pts1.T, pts2.T)
+#points_3d_13 = cv2.triangulatePoints(P1, P3, pts1.T, pts3.T)
 
-    # Perform triangulation
-    points3d_hom = cv2.sfm.triangulatePoints(points2d, projection_matrices)
+#Average results for better accuracy
+#inal_3d = (points_3d_12 + points_3d_13) / 2
 
-    
-    #Shouldnt need below if statement remove it after testing
-    
-    # Check if points3d_hom has shape (4, N)
-    if points3d_hom.shape[0] == 4:
-        # Convert from homogeneous to Euclidean: X = X_h / W
-        points3d = points3d_hom[:3] / points3d_hom[3]
-    else:
-        # If it's 3 x N, they are already in Euclidean coords
-        points3d = points3d_hom
-    
-    print("Triangulated 3D points (shape = {}):\n".format(points3d.shape))
-    print(points3d)
 
-if __name__ == "__main__":
-    main()
+
+#convert to ground coordinates (Z is depth below drone)
+#not sure if we need this
+ground_coords = np.column_stack((points_3d[:, 0], points_3d[:, 1], h - points_3d[:, 2]))
+
+print("Reconstructed 3D Ground Coordinates:\n", ground_coords)
