@@ -6,6 +6,7 @@
 #dir
 Image Segmenting
 ImageStitching
+ShapeModel/Training/runs
 Filtering
 .DS_Store
 venv/
