@@ -16,11 +16,11 @@ obj_points = []
 img_points = []
 
 # Specify your folder here
-image_folder = "./Triangulation/images"
+image_folder = "Triangulation/images"
 
 # List all files in the folder and filter out only JPGs (or PNGs)
 all_files = os.listdir(image_folder)
-images = [f for f in all_files if f.lower().endswith(".jpg")]
+images = [f for f in all_files if f.lower().endswith(".png")]
 
 print(f"Found {len(images)} images in '{image_folder}':")
 for idx, fname in enumerate(images):
