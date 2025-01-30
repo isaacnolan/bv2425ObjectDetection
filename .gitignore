@@ -2,7 +2,7 @@
 *.png
 *.pt
 *.mp4
-
+*.txt
 #dir
 Image Segmenting
 ImageStitching
