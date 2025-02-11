@@ -3,24 +3,20 @@ train: PATH/train/images # the location of the training images !DO NOT CHANGE!
 val: PATH/valid/images # the location of the validation images !DO NOT CHANGE!
 #test: /home/ubuntu/data/test/images # the location of the testing images !DO NOT CHANGE!
 
-nc: 20 # the number of different objects to be trained on. Basically the length of the array below
-names: ['Person/Mannequin',
-        'Car',
-        'Motorcycle',
-        'Airplane',
-        'Bus',
-        'Boat',
+nc: 16 # the number of different objects to be trained on. Basically the length of the array below
+names: ['Sports Ball',
         'Stop Sign',
-        'Bench',
-        'Snowboard',
+        'Car',
         'Umbrella',
-        'Soccer Ball', 'Football', 'Basketball', 'Baseball', 'Volleyball'
-        'Kite',
-        'Baseball Bat',
-        'Mattress',
-        'Handbag',
-        'Microwave',
-        'Clock',
         'Tennis Racket',
         'Suitcase',
-        'Skis'] # an array of all the different combination names
+        'Airplane',
+        'Motorcycle',
+        'Mannequin',
+        'Person',
+        'School Bus',
+        'Bat',
+        'Boat',
+        'Skis',
+        'Snowboard',
+        'Bed'] # an array of all the different combination names
