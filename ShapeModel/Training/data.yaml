@@ -1,4 +1,4 @@
-path: PATH
+path: /users/PAS2926/inolan/bv2425ObjectDetection/ShapeModel/Datasets/dataset0206 
 train: PATH/train/images # the location of the training images !DO NOT CHANGE!
 val: PATH/valid/images # the location of the validation images !DO NOT CHANGE!
 #test: /home/ubuntu/data/test/images # the location of the testing images !DO NOT CHANGE!
