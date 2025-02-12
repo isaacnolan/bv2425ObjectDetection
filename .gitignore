@@ -2,10 +2,11 @@
 *.png
 *.pt
 *.mp4
-
+*.txt
 #dir
 Image Segmenting
 ImageStitching
+ShapeModel/Training/runs
 Filtering
 .DS_Store
 venv/

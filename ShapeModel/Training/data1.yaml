@@ -1,28 +1,28 @@
-path: ImageClassifier
-train: .\train\images # the location of the training images !DO NOT CHANGE!
-val: .\valid\images # the location of the validation images !DO NOT CHANGE!
-#test: /home/ubuntu/data/test/images # the location of the testing images !DO NOT CHANGE!
+path: /users/PAS2926/inolan/bv2425ObjectDetection/ShapeModel/Training/
+train: /users/PAS2926/inolan/bv2425ObjectDetection/ShapeModel/Training/train/images
+val: /users/PAS2926/inolan/bv2425ObjectDetection/ShapeModel/Training/valid/images
+#test: /home/ubuntu/data/test/images
 
-nc: 9 # the number of different objects to be trained on. Basically the length of the array below
-names: ['Football',
-	'Soccerball',
-	'Basketballe',
-	'Volleyball',
-	'Stop Sign',
-	'Car',
-	'Umbrella',
-	'Tennis Racket',
-	'Suitcase Large',
-	'Suitcase Medium',
-	'Airplane',
-	'Motorcycle',
-	'Mannequin',
-	'Person',
-	'School Bus',
-	'Bat',
-	'Boat',
-	'Skis',
-	'Snowboard',
-	'Bed'] # an array of all the different combination names
-
-#"datasets_dir": "C:\\Users\\smbro\\repos\\bv2425ObjectDetection\\ShapeModel\\Training\\data",
+nc: 20
+names: [
+    'Football',
+    'Soccerball',
+    'Basketballe',
+    'Volleyball',
+    'Stop Sign',
+    'Car',
+    'Umbrella',
+    'Tennis Racket',
+    'Suitcase Large',
+    'Suitcase Medium',
+    'Airplane',
+    'Motorcycle',
+    'Mannequin',
+    'Person',
+    'School Bus',
+    'Bat',
+    'Boat',
+    'Skis',
+    'Snowboard',
+    'Bed'
+]
