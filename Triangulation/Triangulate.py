@@ -2,9 +2,9 @@ import cv2
 import numpy as np
 
 #intrinsic matrix
-K = np.array([[2179.63, 0, 473.28],
-              [0, 1958.57, 527.62],
-              [0, 0, 1]], dtype=np.float32)
+K = np.array([[9.31696166e+03, 0.00000000e+00, 9.42461549e+02],
+              [0.00000000e+00, 1.02161568e+04, 9.53746283e+02],
+              [0.00000000e+00, 0.00000000e+00, 1.00000000e+00]], dtype=np.float32)
 
 #extrinsic parameters (top-down orientation)
 #this also might be the identity matrix not sure yet
