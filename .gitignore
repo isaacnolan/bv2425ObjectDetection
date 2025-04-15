@@ -7,7 +7,7 @@
 Image Segmenting
 ImageStitching
 ShapeModel/Training/runs
-Filtering
+#Filtering
 .DS_Store
 venv/
 *.pt
